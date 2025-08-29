@@ -47,18 +47,6 @@ onMounted(() => {
     <main class="container max-w-4xl px-4 py-6 mx-auto">
       <router-view />
     </main>
-
-    <!-- 頁腳 -->
-    <footer class="py-4 text-center">
-      <p class="text-sm text-gray-500">
-        powered by
-        <a href="https://5xcampus.com" class="underline hover:text-rose-500">5XCAMPUS</a> |
-        <a href="https://todoo.5xcamp.us" class="underline hover:text-rose-500">API</a> |
-        <a href="https://github.com/5xTraining/todoo-app" class="underline hover:text-rose-500"
-          >SOURCE</a
-        >
-      </p>
-    </footer>
   </div>
 </template>
 
