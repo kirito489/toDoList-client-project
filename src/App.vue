@@ -25,7 +25,7 @@ onMounted(() => {
         <p class="px-2 text-gray-500">Simple TODO App</p>
         <div class="hidden px-2 text-gray-500 sm:block">
           powered by
-          <p class="underline hover:text-rose-500"
+          <p class="underline hover:text-rose-500 author"
             >Alan TSAI</p
           >
           |
@@ -64,4 +64,8 @@ onMounted(() => {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+
+.author {
+  display: inline;
+}
 </style>
