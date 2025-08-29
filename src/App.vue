@@ -22,19 +22,19 @@ onMounted(() => {
         </router-link>
       </h1>
       <div class="flex items-center justify-between mt-2 text-sm">
-        <p class="px-2 text-gray-500">Simple and Stupid TODO App</p>
+        <p class="px-2 text-gray-500">Simple TODO App</p>
         <div class="hidden px-2 text-gray-500 sm:block">
           powered by
-          <a href="https://5xcampus.com" class="underline hover:text-rose-500" target="_blank"
-            >5xCampus</a
+          <p class="underline hover:text-rose-500"
+            >Alan TSAI</p
           >
           |
           <a href="https://todoo.5xcamp.us" class="underline hover:text-rose-500" target="_blank"
-            >API</a
+            >API文件</a
           >
           |
           <a
-            href="https://github.com/5xTraining/todoo-app"
+            href="https://github.com/kirito489/toDoList-client-project"
             class="underline hover:text-rose-500"
             target="_blank"
             >GitHub</a
