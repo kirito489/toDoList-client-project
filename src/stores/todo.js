@@ -43,7 +43,7 @@ export const useTodoStore = defineStore('todo', () => {
   const toggleTodo = (id) => {
     const todo = todos.value.find((todo) => todo.id === id)
     if (todo) {
-      const isCompleted = todo.completed_at !== null
+      const isCompleted = !!todo.completed_at
       updateTodo(id, {
         completed_at: isCompleted ? null : new Date().toISOString(),
       })

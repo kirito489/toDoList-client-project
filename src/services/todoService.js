@@ -3,7 +3,8 @@ import api from './api.js'
 export const todoService = {
   async getTodos() {
     const response = await api.get('/todos')
-    return response.data.todos
+    console.log('getTodos response:', response.data)
+    return response.data.todos || []
   },
 
   async addTodo(content) {
@@ -12,6 +13,7 @@ export const todoService = {
         content,
       },
     })
+    console.log('addTodo response:', response.data)
     return response.data
   },
 
@@ -21,14 +23,17 @@ export const todoService = {
         content,
       },
     })
+    console.log('updateTodo response:', response.data)
     return response.data
   },
 
   async deleteTodo(id) {
-    await api.delete(`/todos/${id}`)
+    const response = await api.delete(`/todos/${id}`)
+    console.log('deleteTodo response:', response.data)
   },
 
   async toggleTodo(id) {
-    await api.patch(`/todos/${id}/toggle`)
+    const response = await api.patch(`/todos/${id}/toggle`)
+    console.log('toggleTodo response:', response.data)
   },
 }

@@ -28,7 +28,9 @@ export function useTodos() {
 
     try {
       const todo = await todoService.addTodo(content.trim())
+      console.log('Adding todo to store:', todo)
       todoStore.addTodo(todo)
+      console.log('Current todos after add:', todoStore.todos)
       return { success: true, todo }
     } catch (error) {
       await Swal.fire('新增失敗', '無法新增待辦事項，請稍後再試', 'error')
@@ -99,13 +101,6 @@ export function useTodos() {
   }
 
   return {
-    todos: todoStore.todos,
-    isLoading: todoStore.isLoading,
-    editingTodo: todoStore.editingTodo,
-    todoCount: todoStore.todoCount,
-    completedCount: todoStore.completedCount,
-    pendingCount: todoStore.pendingCount,
-
     loadTodos,
     addTodo,
     updateTodo,

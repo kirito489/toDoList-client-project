@@ -1,23 +1,18 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useAuth } from '../composables/useAuth.js'
 import { useTodos } from '../composables/useTodos.js'
+import { useTodoStore } from '../stores/todo.js'
 
 const router = useRouter()
 const { logout, userName } = useAuth()
-const {
-  todos,
-  isLoading,
-  editingTodo,
-  loadTodos,
-  addTodo,
-  updateTodo,
-  deleteTodo,
-  toggleTodo,
-  startEdit,
-  cancelEdit,
-} = useTodos()
+const todoStore = useTodoStore()
+
+const { todos, isLoading, editingTodo } = storeToRefs(todoStore)
+
+const { loadTodos, addTodo, updateTodo, deleteTodo, toggleTodo, startEdit, cancelEdit } = useTodos()
 
 const task = ref('')
 const todoText = ref('')
@@ -27,7 +22,6 @@ onMounted(() => {
   loadTodos()
 })
 
-// 新增待辦事項
 const handleAddTodo = async () => {
   const result = await addTodo(task.value)
   if (result.success) {
@@ -35,14 +29,12 @@ const handleAddTodo = async () => {
   }
 }
 
-// 開始編輯
 const handleEdit = (todo) => {
   startEdit(todo)
   todoText.value = todo.content
   showEditModal.value = true
 }
 
-// 更新待辦事項
 const handleUpdate = async () => {
   if (!editingTodo.value) return
 
@@ -54,14 +46,12 @@ const handleUpdate = async () => {
   }
 }
 
-// 取消編輯
 const handleCancelEdit = () => {
   showEditModal.value = false
   cancelEdit()
   todoText.value = ''
 }
 
-// 登出
 const handleLogout = async () => {
   await logout()
   router.push('/auth')
@@ -70,7 +60,6 @@ const handleLogout = async () => {
 
 <template>
   <div>
-    <!-- 導覽列 -->
     <header>
       <nav class="flex justify-end pt-6 pb-3">
         <a
@@ -83,7 +72,6 @@ const handleLogout = async () => {
       </nav>
     </header>
 
-    <!-- 新增待辦事項表單 -->
     <section id="taskSection" class="justify-center pt-4 pb-8">
       <form @submit.prevent="handleAddTodo" class="flex justify-center">
         <input
@@ -104,7 +92,6 @@ const handleLogout = async () => {
       </form>
     </section>
 
-    <!-- 待辦事項列表 -->
     <section class="px-4 my-2 bg-white rounded-sm shadow-sm todo-list sm:px-8">
       <div v-if="isLoading" class="py-8 text-center text-gray-500">載入中...</div>
 
@@ -124,15 +111,15 @@ const handleLogout = async () => {
             <label class="flex items-center px-2 cursor-pointer">
               <input
                 type="checkbox"
-                :checked="todo.completed_at !== null"
+                :checked="!!todo.completed_at"
                 @click="toggleTodo(todo.id)"
                 class="w-6 h-6 mr-2 border border-gray-400 rounded"
               />
               <p
                 class="content"
                 :class="{
-                  'text-gray-400 line-through': todo.completed_at !== null,
-                  'text-gray-800': todo.completed_at === null,
+                  'text-gray-400 line-through': !!todo.completed_at,
+                  'text-gray-800': !todo.completed_at,
                 }"
               >
                 {{ todo.content }}
@@ -140,11 +127,9 @@ const handleLogout = async () => {
             </label>
           </div>
 
-          <!-- 右側：操作按鈕 -->
           <div class="flex">
-            <!-- 編輯按鈕 (未完成時才顯示) -->
             <a
-              v-if="todo.completed_at === null"
+              v-if="!todo.completed_at"
               href="#"
               @click.prevent="handleEdit(todo)"
               class="px-2 py-2 mx-1 bg-gray-100 rounded-sm sm:px-4 sm:py-3 hover:bg-gray-200"
@@ -156,7 +141,6 @@ const handleLogout = async () => {
               </svg>
             </a>
 
-            <!-- 刪除按鈕 -->
             <a
               href="#"
               @click.prevent="deleteTodo(todo)"
@@ -175,7 +159,6 @@ const handleLogout = async () => {
       </ul>
     </section>
 
-    <!-- 編輯模態框 -->
     <div
       v-if="showEditModal"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
